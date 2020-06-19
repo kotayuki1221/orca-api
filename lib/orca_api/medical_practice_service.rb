@@ -477,7 +477,8 @@ module OrcaApi
     # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def calc_medical_practice_fee(params)
       res = if params["Invoice_Number"]
-              call_01_for_update(params, "Modify")
+              # call_01_for_update(params, "Modify")
+              call_01_for_update(params, "Print")
             else
               call_01_for_create(params)
             end
@@ -740,7 +741,7 @@ module OrcaApi
         end
       end
 
-      call_04(params, res)
+      # call_04(params, res)
     end
 
     # 診察料返却API（初回接続）
@@ -798,7 +799,8 @@ module OrcaApi
       if res_body["Invoice_Number"]
         body["medicalv3req2"]["Perform_Time"] = params["Perform_Time"]
         body["medicalv3req2"]["Invoice_Number"] = res_body["Invoice_Number"]
-        body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        # body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        body["medicalv3req2"]["Patient_Mode"] = "Print"
         body["medicalv3req2"]["Diagnosis_Information"]["HealthInsurance_Information"] =
           params["Diagnosis_Information"]["HealthInsurance_Information"]
         body["medicalv3req2"]["Diagnosis_Information"]["Medical_OffTime"] =
@@ -826,7 +828,8 @@ module OrcaApi
         }
       }
       if res.body["Invoice_Number"]
-        body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        # body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        body["medicalv3req2"]["Patient_Mode"] = "Print"
         body["medicalv3req2"]["Invoice_Number"] = res.invoice_number
       end
       if answer
